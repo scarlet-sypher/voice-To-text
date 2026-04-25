@@ -1,13 +1,20 @@
 export default function ThemeToggle({ isDark, onToggle }) {
+  const bgColor = isDark ? "rgb(23, 23, 23)" : "rgb(255, 255, 255)";
+  const borderColor = isDark ? "rgb(39, 39, 39)" : "rgb(229, 229, 229)";
+  const iconColor = isDark ? "rgb(200, 200, 200)" : "rgb(120, 120, 120)";
+
   return (
     <button
       onClick={onToggle}
       aria-label="Toggle theme"
+      style={{
+        backgroundColor: bgColor,
+        borderColor: borderColor,
+        color: iconColor,
+      }}
       className="
         w-9 h-9 rounded-full flex items-center justify-center
-        border border-neutral-200 dark:border-neutral-700
-        bg-white dark:bg-neutral-800
-        text-neutral-500 dark:text-neutral-400
+        border
         hover:scale-105 transition-all duration-200 shadow-sm
       "
     >
