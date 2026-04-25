@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div style={{ padding: "20px" }}>
+      <h1>🎤 Speech to Text</h1>
 
-export default App
+      <p>Status: {listening ? "Listening..." : "Stopped"}</p>
+
+      <button
+        onClick={() => SpeechRecognition.startListening({ continuous: true })}
+      >
+        Start
+      </button>
+
+      <button onClick={SpeechRecognition.stopListening}>Stop</button>
+
+      <button onClick={resetTranscript}>Clear</button>
+
+      <div
+        style={{ marginTop: "20px", border: "1px solid #ccc", padding: "10px" }}
+      >
+        <strong>Transcript:</strong>
+        <p>{transcript}</p>
+      </div>
+    </div>
+  );
+};
+
+export default App;
